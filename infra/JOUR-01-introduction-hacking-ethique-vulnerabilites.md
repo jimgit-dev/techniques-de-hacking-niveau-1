@@ -394,7 +394,7 @@ La reconnaissance ennemie se contrecarre en **réduisant la surface d'attaque** 
 # docker exec = exécute une commande à l'intérieur d'un conteneur déjà en cours d'exécution
 # bash -c '...' = lance un nouveau shell bash et exécute la chaîne de commandes entre guillemets
 # apache2ctl restart = redémarre le serveur web Apache (pour appliquer les changements de configuration)
-docker exec dvwa-target bash -c "echo 'Options -Indexes' >> /etc/apache2/conf-enabled/security.conf && apache2ctl restart"
+docker exec dvwa-target bash -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf && echo 'Options -Indexes' >> /etc/apache2/conf-enabled/security.conf && apache2ctl restart"
 # Vérification : tenter d'accéder à un répertoire sans index.html ne liste plus son contenu
 curl -s -I "http://localhost:8088/" 2>/dev/null | grep -i "200\|403"
 # → 403 Forbidden  (le directory listing est désactivé, l'attaquant ne voit plus la structure)
@@ -556,7 +556,7 @@ L'injection SQL se corrige en **ne concaténant jamais l'entrée utilisateur dan
 #   $stmt->execute([$id]);
 # 
 # Re-tester sqlmap après correction :
-# sqlmap -u "http://localhost:8088/vulnerabilities/sqli/?id=1&Submit=Submit" --cookie-file=/tmp/dvwa_cookie.txt --batch
+# sqlmap -u "http://localhost:8088/vulnerabilities/sqli/?id=1&Submit=Submit" --load-cookies=/tmp/dvwa_cookie.txt --batch
 # → [CRITICAL] all tested parameters do not appear to be injectable (sqlmap échoue = défense efficace)
 ```
 
