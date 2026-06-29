@@ -359,7 +359,7 @@ gobuster dir -u http://localhost:8088 \
 # 🔍 -s = silencieux (pas de barre de progression), -c = sauvegarde le cookie dans un fichier
 # 🔍 -d = données POST (username=admin&password=password&Login=Login)
 # 🔍 grep -o extrait "Welcome" (succès) ou "Login failed" (échec) pour validation
-curl -s -c /tmp/dvwa_cookie.txt \
+curl -s -c ./dvwa_cookie.txt \
   -d "username=admin&password=password&Login=Login" \
   "http://localhost:8088/login.php" | grep -o "Welcome\|Login failed"
 # → Welcome  (authentification réussie, cookie stocké dans /tmp/dvwa_cookie.txt)
@@ -368,7 +368,7 @@ curl -s -c /tmp/dvwa_cookie.txt \
 # Firefox : http://localhost:8088 → DVWA Security → low
 # Alternative sans navigateur :
 # 🔍 -b = envoie le cookie d'auth, -c = met à jour le fichier avec le nouveau cookie security=low
-curl -s -b /tmp/dvwa_cookie.txt -c /tmp/dvwa_cookie.txt \
+curl -s -b ./dvwa_cookie.txt -c ./dvwa_cookie.txt \
   -d "security=low&seclev_submit=Submit" \
   "http://localhost:8088/security.php"
 # Le cookie jar contient maintenant PHPSESSID + security=low
